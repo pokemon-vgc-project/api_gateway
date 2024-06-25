@@ -7,10 +7,12 @@ import { PokedexMs } from 'src/setup/config/config_loader.interface';
 export const getNatureServiceProvider = (
   configService: ConfigService,
 ): ClientProvider => {
-  const { package: packageStr, url } = configService.get<PokedexMs>(
-    configLoaderEnum.POKEDEX_MS,
-  );
-
+  const {
+    package: packageStr,
+    host,
+    port,
+  } = configService.get<PokedexMs>(configLoaderEnum.POKEDEX_MS);
+  const url = `${host}:${port}`;
   return {
     transport: Transport.GRPC,
     options: {

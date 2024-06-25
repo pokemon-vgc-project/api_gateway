@@ -4,7 +4,8 @@ export interface HttpSetup {
 }
 
 export interface PokedexMs {
-  url: string;
+  host: string;
+  port: number;
   package: string;
 }
 

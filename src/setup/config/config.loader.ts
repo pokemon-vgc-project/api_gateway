@@ -11,7 +11,10 @@ export const getConfig = (): ConfigLoaderAdapter => ({
     port: process.env.HTTP_PORT ? Number(process.env.HTTP_PORT) : 3001,
   },
   pokedexMs: {
-    url: process.env.POKEDEX_MS_HOST || 'localhost:3000',
+    host: process.env.POKEDEX_MS_HOST || 'localhost',
+    port: process.env.POKEDEX_MS_PORT
+      ? Number(process.env.POKEDEX_MS_PORT)
+      : 3000,
     package: process.env.POKEDEX_MS_PACKAGE || 'pokedex',
   },
 });
