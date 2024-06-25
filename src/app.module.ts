@@ -3,6 +3,8 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { ClientsModule, Transport } from '@nestjs/microservices';
 import { join } from 'path';
+import { ConfigModule } from '@nestjs/config';
+import { getConfig } from './setup/config/config.loader';
 
 @Module({
   imports: [
@@ -17,6 +19,9 @@ import { join } from 'path';
         },
       },
     ]),
+    ConfigModule.forRoot({
+      load: [getConfig],
+    }),
   ],
   controllers: [AppController],
   providers: [AppService],
