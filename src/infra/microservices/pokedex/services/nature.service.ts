@@ -2,7 +2,10 @@ import { Inject, Injectable, OnModuleInit } from '@nestjs/common';
 import { ClientGrpc } from '@nestjs/microservices';
 import { firstValueFrom } from 'rxjs';
 import { Nature } from 'src/domain/models/nature.model';
-import { PaginationResponse } from 'src/domain/models/pagination.model';
+import {
+  PaginationMeta,
+  PaginationResponse,
+} from 'src/domain/models/pagination.model';
 import { pokedex } from 'src/domain/proto/pokedex';
 import { convertNatureMsToNature } from '../mappers/nature.mapper';
 
@@ -27,7 +30,7 @@ export class NatureService implements OnModuleInit {
 
     return {
       data: data.map(convertNatureMsToNature),
-      meta,
+      meta: meta as unknown as PaginationMeta,
     };
   }
 }

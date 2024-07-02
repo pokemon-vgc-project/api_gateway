@@ -1,6 +1,6 @@
 import { pokedex } from '../proto/pokedex';
 
-export interface PaginationMeta extends pokedex.PaginationMeta {}
+export type PaginationMeta = Required<pokedex.PaginationMeta>;
 
 export interface PaginationResponse<Data> {
   data: Data;
