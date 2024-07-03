@@ -1,7 +1,8 @@
 import { Module } from '@nestjs/common';
 import { ClientsModule } from '@nestjs/microservices';
-import { getNatureServiceProvider } from './providers/nature_service.provider';
+import { getNatureServiceProvider } from './pokedex/providers/nature_service.provider';
 import { ConfigService } from '@nestjs/config';
+import { PokedexModule } from './pokedex/pokedex.module';
 
 @Module({
   imports: [
@@ -12,7 +13,8 @@ import { ConfigService } from '@nestjs/config';
         useFactory: getNatureServiceProvider,
       },
     ]),
+    PokedexModule,
   ],
-  exports: [ClientsModule],
+  exports: [ClientsModule, PokedexModule],
 })
 export class MicroservicesModule {}

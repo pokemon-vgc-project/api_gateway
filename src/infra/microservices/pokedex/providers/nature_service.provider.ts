@@ -18,7 +18,10 @@ export const getNatureServiceProvider = (
     options: {
       url,
       package: packageStr,
-      protoPath: join(__dirname, '../../../../src/domain/proto/pokedex.proto'),
+      protoPath: join(
+        __dirname,
+        '../../../../../src/domain/proto/pokedex.proto',
+      ),
     },
   };
 };

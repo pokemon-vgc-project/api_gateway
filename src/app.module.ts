@@ -1,9 +1,8 @@
 import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
 import { ConfigModule } from '@nestjs/config';
 import { getConfig } from './setup/config/config.loader';
 import { InfraModule } from './infra/infra.module';
+import { PokedexModule } from './pokedex/pokedex.module';
 
 @Module({
   imports: [
@@ -12,8 +11,7 @@ import { InfraModule } from './infra/infra.module';
       isGlobal: true,
     }),
     InfraModule,
+    PokedexModule,
   ],
-  controllers: [AppController],
-  providers: [AppService],
 })
 export class AppModule {}
