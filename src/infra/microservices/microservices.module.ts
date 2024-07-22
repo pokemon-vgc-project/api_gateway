@@ -3,12 +3,13 @@ import { ClientsModule } from '@nestjs/microservices';
 import { getNatureServiceProvider } from './pokedex/providers/nature_service.provider';
 import { ConfigService } from '@nestjs/config';
 import { PokedexModule } from './pokedex/pokedex.module';
+import { PokedexServices } from '@pokemon-vgc-project/lib-proto';
 
 @Module({
   imports: [
     ClientsModule.registerAsync([
       {
-        name: 'NatureService',
+        name: PokedexServices.NATURE_SERVICE,
         inject: [ConfigService],
         useFactory: getNatureServiceProvider,
       },
