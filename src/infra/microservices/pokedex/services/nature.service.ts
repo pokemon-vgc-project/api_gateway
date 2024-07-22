@@ -8,19 +8,21 @@ import {
 } from 'src/domain/models/pagination.model';
 import { pokedex } from 'src/domain/proto/pokedex';
 import { convertNatureMsToNature } from '../mappers/nature.mapper';
+import { PokedexServices } from '@pokemon-vgc-project/lib-proto';
 
 @Injectable()
 export class NatureService implements OnModuleInit {
   private natureMsService: pokedex.NatureService;
 
   constructor(
-    @Inject('NatureService')
+    @Inject(PokedexServices.NATURE_SERVICE)
     private readonly client: ClientGrpc,
   ) {}
 
   onModuleInit() {
-    this.natureMsService =
-      this.client.getService<pokedex.NatureService>('NatureService');
+    this.natureMsService = this.client.getService<pokedex.NatureService>(
+      PokedexServices.NATURE_SERVICE,
+    );
   }
 
   async getNatures(): Promise<PaginationResponse<Nature[]>> {

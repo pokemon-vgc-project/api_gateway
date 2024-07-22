@@ -20,7 +20,7 @@ export const getNatureServiceProvider = (
       package: packageStr,
       protoPath: join(
         __dirname,
-        '../../../../../src/domain/proto/pokedex.proto',
+        '../../../../../node_modules/@pokemon-vgc-project/lib-proto/proto/pokedex.proto',
       ),
     },
   };
