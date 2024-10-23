@@ -1,4 +1,4 @@
-import { pokedex } from '../proto/pokedex';
+import { pokedex } from '../proto/@pokemon-vgc-project/lib-proto/proto/pokedex';
 
 export type PaginationMeta = Required<pokedex.PaginationMeta>;
 

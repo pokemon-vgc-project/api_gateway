@@ -6,7 +6,7 @@ import {
   PaginationMeta,
   PaginationResponse,
 } from 'src/domain/models/pagination.model';
-import { pokedex } from 'src/domain/proto/pokedex';
+import { pokedex } from 'src/domain/proto/@pokemon-vgc-project/lib-proto/proto/pokedex';
 import { convertNatureMsToNature } from '../mappers/nature.mapper';
 import { PokedexServices } from '@pokemon-vgc-project/lib-proto';
 

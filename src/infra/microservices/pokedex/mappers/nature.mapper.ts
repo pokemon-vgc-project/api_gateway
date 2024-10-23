@@ -1,5 +1,5 @@
 import { Nature, PokemonStatusEnum } from 'src/domain/models/nature.model';
-import { pokedex } from 'src/domain/proto/pokedex';
+import { pokedex } from 'src/domain/proto/@pokemon-vgc-project/lib-proto/proto/pokedex';
 
 export const convertNatureMsToNature = (
   natureMs: pokedex.NatureDto,
