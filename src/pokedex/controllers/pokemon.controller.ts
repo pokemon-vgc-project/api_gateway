@@ -3,10 +3,18 @@ import { ApiOkResponse, ApiOperation } from '@nestjs/swagger';
 import { PokemonService } from '../../infra/microservices/pokedex/services/pokemon.service';
 import { GetFormesDto } from '../dtos/pokemons/forme.dto';
 import { GetTypesDto } from '../dtos/pokemons/type.dto';
+import { GetPokemonsDto } from '../dtos/pokemons/pokemon.dto';
 
 @Controller('pokemons')
 export class PokemonController {
   constructor(private readonly pokemonService: PokemonService) {}
+
+  @Get()
+  @ApiOperation({ description: 'Get pokemon list' })
+  @ApiOkResponse({ type: GetPokemonsDto })
+  getPokemons() {
+    return this.pokemonService.getPokemons();
+  }
 
   @Get('formes')
   @ApiOperation({ description: "Get the pokemon's forme list" })
