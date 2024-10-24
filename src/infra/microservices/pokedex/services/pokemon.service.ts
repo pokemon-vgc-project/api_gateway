@@ -7,8 +7,11 @@ import {
   PaginationMeta,
   PaginationResponse,
 } from '../../../../domain/models/pagination.model';
-import { PokemonType } from '../../../../domain/models/pokedex.model';
-import { convertPokemonTypeMsToPokemonType } from '../mappers/pokemon.mapper';
+import { Pokemon, PokemonType } from '../../../../domain/models/pokedex.model';
+import {
+  convertPokemonMsToPokemon,
+  convertPokemonTypeMsToPokemonType,
+} from '../mappers/pokemon.mapper';
 
 @Injectable()
 export class PokemonService implements OnModuleInit {
@@ -45,6 +48,17 @@ export class PokemonService implements OnModuleInit {
 
     return {
       data: data.map(convertPokemonTypeMsToPokemonType),
+      meta: meta as unknown as PaginationMeta,
+    };
+  }
+
+  async getPokemons(): Promise<PaginationResponse<Pokemon[]>> {
+    const { data, meta } = await firstValueFrom<pokedex.ResponsePokemonsDto>(
+      this.pokemonMsService.getPokemons({}),
+    );
+
+    return {
+      data: data.map(convertPokemonMsToPokemon),
       meta: meta as unknown as PaginationMeta,
     };
   }
