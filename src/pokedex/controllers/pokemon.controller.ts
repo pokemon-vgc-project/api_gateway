@@ -6,6 +6,7 @@ import { GetTypesDto } from '../dtos/pokemons/type.dto';
 import { GetPokemonsDto } from '../dtos/pokemons/pokemon.dto';
 import { PaginationParamsDecorator } from 'src/infra/pagination/decorations/pagination.decorator';
 import { PaginationParams } from 'src/domain/models/pagination.model';
+import { ApiPaginationParameterQuery } from 'src/infra/pagination/decorations/pagination_parameter.decorator';
 
 @Controller('pokemons')
 export class PokemonController {
@@ -13,6 +14,7 @@ export class PokemonController {
 
   @Get()
   @ApiOperation({ description: 'Get pokemon list' })
+  @ApiPaginationParameterQuery()
   @ApiOkResponse({ type: GetPokemonsDto })
   getPokemons(
     @PaginationParamsDecorator() pagination: PaginationParams | undefined,
