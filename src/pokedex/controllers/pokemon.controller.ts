@@ -4,6 +4,8 @@ import { PokemonService } from '../../infra/microservices/pokedex/services/pokem
 import { GetFormesDto } from '../dtos/pokemons/forme.dto';
 import { GetTypesDto } from '../dtos/pokemons/type.dto';
 import { GetPokemonsDto } from '../dtos/pokemons/pokemon.dto';
+import { PaginationParamsDecorator } from 'src/infra/pagination/decorations/pagination.decorator';
+import { PaginationParams } from 'src/domain/models/pagination.model';
 
 @Controller('pokemons')
 export class PokemonController {
@@ -12,8 +14,10 @@ export class PokemonController {
   @Get()
   @ApiOperation({ description: 'Get pokemon list' })
   @ApiOkResponse({ type: GetPokemonsDto })
-  getPokemons() {
-    return this.pokemonService.getPokemons();
+  getPokemons(
+    @PaginationParamsDecorator() pagination: PaginationParams | undefined,
+  ) {
+    return this.pokemonService.getPokemons({ pagination });
   }
 
   @Get('formes')

@@ -6,3 +6,8 @@ export interface PaginationResponse<Data> {
   data: Data;
   meta: PaginationMeta;
 }
+
+export interface PaginationParams {
+  limit?: number;
+  skip?: number;
+}

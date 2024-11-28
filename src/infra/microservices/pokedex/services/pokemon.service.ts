@@ -4,6 +4,7 @@ import { firstValueFrom } from 'rxjs';
 import { PokedexServices } from '@pokemon-vgc-project/lib-proto';
 import { pokedex } from '../../../../domain/proto/@pokemon-vgc-project/lib-proto/proto/pokedex';
 import {
+  PaginationParams,
   PaginationMeta,
   PaginationResponse,
 } from '../../../../domain/models/pagination.model';
@@ -12,6 +13,10 @@ import {
   convertPokemonMsToPokemon,
   convertPokemonTypeMsToPokemonType,
 } from '../mappers/pokemon.mapper';
+
+interface GetPokemonsOptions {
+  pagination?: PaginationParams;
+}
 
 @Injectable()
 export class PokemonService implements OnModuleInit {
@@ -52,9 +57,11 @@ export class PokemonService implements OnModuleInit {
     };
   }
 
-  async getPokemons(): Promise<PaginationResponse<Pokemon[]>> {
+  async getPokemons({
+    pagination,
+  }: GetPokemonsOptions): Promise<PaginationResponse<Pokemon[]>> {
     const { data, meta } = await firstValueFrom<pokedex.ResponsePokemonsDto>(
-      this.pokemonMsService.getPokemons({}),
+      this.pokemonMsService.getPokemons({ pagination }),
     );
 
     return {
