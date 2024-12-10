@@ -7,6 +7,13 @@ import { GetPokemonsDto } from '../dtos/pokemons/pokemon.dto';
 import { PaginationParamsDecorator } from 'src/infra/pagination/decorations/pagination.decorator';
 import { PaginationParams } from 'src/domain/models/pagination.model';
 import { ApiPaginationParameterQuery } from 'src/infra/pagination/decorations/pagination_parameter.decorator';
+import { SortParamsDecorator } from 'src/infra/sort/decorations/sort.decoration';
+import { SortParams } from 'src/infra/sort/model/sort.model';
+import {
+  pokemonSortNames,
+  pokemonSortNamesExample,
+} from '../model/pokemon_sorts.model';
+import { ApiSortParameterQuery } from 'src/infra/sort/decorations/sort_parameter.decorator';
 
 @Controller('pokemons')
 export class PokemonController {
@@ -15,11 +22,13 @@ export class PokemonController {
   @Get()
   @ApiOperation({ description: 'Get pokemon list' })
   @ApiPaginationParameterQuery()
+  @ApiSortParameterQuery(pokemonSortNamesExample)
   @ApiOkResponse({ type: GetPokemonsDto })
   getPokemons(
     @PaginationParamsDecorator() pagination: PaginationParams | undefined,
+    @SortParamsDecorator(pokemonSortNames) sorts: SortParams[] | undefined,
   ) {
-    return this.pokemonService.getPokemons({ pagination });
+    return this.pokemonService.getPokemons({ pagination, sorts });
   }
 
   @Get('formes')

@@ -13,9 +13,11 @@ import {
   convertPokemonMsToPokemon,
   convertPokemonTypeMsToPokemonType,
 } from '../mappers/pokemon.mapper';
+import { SortParams } from 'src/infra/sort/model/sort.model';
 
 interface GetPokemonsOptions {
   pagination?: PaginationParams;
+  sorts?: SortParams[];
 }
 
 @Injectable()
@@ -59,9 +61,10 @@ export class PokemonService implements OnModuleInit {
 
   async getPokemons({
     pagination,
+    sorts,
   }: GetPokemonsOptions): Promise<PaginationResponse<Pokemon[]>> {
     const { data, meta } = await firstValueFrom<pokedex.ResponsePokemonsDto>(
-      this.pokemonMsService.getPokemons({ pagination }),
+      this.pokemonMsService.getPokemons({ pagination, sorts }),
     );
 
     return {
