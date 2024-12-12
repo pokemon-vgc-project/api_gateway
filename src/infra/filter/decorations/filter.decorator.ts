@@ -7,5 +7,11 @@ export const FilterParamsDecorator = <T>(
 ) =>
   createParamDecorator((_: unknown, ctx: ExecutionContext): T | undefined => {
     const request = ctx.switchToHttp().getRequest();
-    return convertToFilterMapper(filterTypeProps, request.query);
+    const { filters } = request.query;
+
+    if (!filters) {
+      return;
+    }
+
+    return convertToFilterMapper(filterTypeProps, JSON.parse(filters));
   })();

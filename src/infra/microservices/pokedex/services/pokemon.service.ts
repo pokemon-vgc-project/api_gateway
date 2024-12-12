@@ -14,10 +14,12 @@ import {
   convertPokemonTypeMsToPokemonType,
 } from '../mappers/pokemon.mapper';
 import { SortParams } from 'src/infra/sort/model/sort.model';
+import { PokemonFilters } from '../models/pokemon_filters.model';
 
 interface GetPokemonsOptions {
   pagination?: PaginationParams;
   sorts?: SortParams[];
+  filters?: PokemonFilters;
 }
 
 @Injectable()
@@ -61,14 +63,15 @@ export class PokemonService implements OnModuleInit {
 
   async getPokemons({
     pagination,
+    filters,
     sorts,
   }: GetPokemonsOptions): Promise<PaginationResponse<Pokemon[]>> {
     const { data, meta } = await firstValueFrom<pokedex.ResponsePokemonsDto>(
-      this.pokemonMsService.getPokemons({ pagination, sorts }),
+      this.pokemonMsService.getPokemons({ pagination, sorts, filters }),
     );
 
     return {
-      data: data.map(convertPokemonMsToPokemon),
+      data: data ? data.map(convertPokemonMsToPokemon) : [],
       meta: meta as unknown as PaginationMeta,
     };
   }
