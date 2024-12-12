@@ -4,11 +4,23 @@ import { firstValueFrom } from 'rxjs';
 import { PokedexServices } from '@pokemon-vgc-project/lib-proto';
 import { pokedex } from '../../../../domain/proto/@pokemon-vgc-project/lib-proto/proto/pokedex';
 import {
+  PaginationParams,
   PaginationMeta,
   PaginationResponse,
 } from '../../../../domain/models/pagination.model';
-import { PokemonType } from '../../../../domain/models/pokedex.model';
-import { convertPokemonTypeMsToPokemonType } from '../mappers/pokemon.mapper';
+import { Pokemon, PokemonType } from '../../../../domain/models/pokedex.model';
+import {
+  convertPokemonMsToPokemon,
+  convertPokemonTypeMsToPokemonType,
+} from '../mappers/pokemon.mapper';
+import { SortParams } from 'src/infra/sort/model/sort.model';
+import { PokemonFilters } from '../models/pokemon_filters.model';
+
+interface GetPokemonsOptions {
+  pagination?: PaginationParams;
+  sorts?: SortParams[];
+  filters?: PokemonFilters;
+}
 
 @Injectable()
 export class PokemonService implements OnModuleInit {
@@ -45,6 +57,21 @@ export class PokemonService implements OnModuleInit {
 
     return {
       data: data.map(convertPokemonTypeMsToPokemonType),
+      meta: meta as unknown as PaginationMeta,
+    };
+  }
+
+  async getPokemons({
+    pagination,
+    filters,
+    sorts,
+  }: GetPokemonsOptions): Promise<PaginationResponse<Pokemon[]>> {
+    const { data, meta } = await firstValueFrom<pokedex.ResponsePokemonsDto>(
+      this.pokemonMsService.getPokemons({ pagination, sorts, filters }),
+    );
+
+    return {
+      data: data ? data.map(convertPokemonMsToPokemon) : [],
       meta: meta as unknown as PaginationMeta,
     };
   }
