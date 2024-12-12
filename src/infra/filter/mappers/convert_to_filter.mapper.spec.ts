@@ -24,7 +24,7 @@ describe('convertToFilterMapper', () => {
     const data = convertToFilterMapper<{
       prop1: { start: number; end: number };
     }>([{ prop: 'prop1', type: FilterTypesEnum.FILTER_TYPE_START_END }], {
-      prop1: `{"start": 0, "end": 10}`,
+      prop1: { start: 0, end: 10 },
     });
     expect(data.prop1.start).toEqual(0);
     expect(data.prop1.end).toEqual(10);
