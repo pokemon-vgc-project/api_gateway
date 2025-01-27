@@ -9,7 +9,12 @@ export interface PokedexMs {
   package: string;
 }
 
+export interface WailordMs {
+  host: string;
+}
+
 export interface ConfigLoaderAdapter {
   http: HttpSetup;
   pokedexMs: PokedexMs;
+  wailordMs: WailordMs;
 }

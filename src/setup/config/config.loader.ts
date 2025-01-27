@@ -17,4 +17,7 @@ export const getConfig = (): ConfigLoaderAdapter => ({
       : 3000,
     package: process.env.POKEDEX_MS_PACKAGE || 'pokedex',
   },
+  wailordMs: {
+    host: process.env.WAILORD_MS_HOST || 'http://wailord.vgcproject.test',
+  },
 });
