@@ -9,10 +9,7 @@ import {
   PaginationResponse,
 } from '../../../../domain/models/pagination.model';
 import { Pokemon, PokemonType } from '../../../../domain/models/pokedex.model';
-import {
-  convertPokemonMsToPokemon,
-  convertPokemonTypeMsToPokemonType,
-} from '../mappers/pokemon.mapper';
+import { PokemonMapper } from '../mappers/pokemon.mapper';
 import { SortParams } from 'src/infra/sort/model/sort.model';
 import { PokemonFilters } from '../models/pokemon_filters.model';
 
@@ -29,6 +26,7 @@ export class PokemonService implements OnModuleInit {
   constructor(
     @Inject(PokedexServices.POKEMON_SERVICE)
     private readonly client: ClientGrpc,
+    private readonly pokemonMapper: PokemonMapper,
   ) {}
 
   onModuleInit() {
@@ -56,7 +54,7 @@ export class PokemonService implements OnModuleInit {
       );
 
     return {
-      data: data.map(convertPokemonTypeMsToPokemonType),
+      data: data.map(this.pokemonMapper.convertPokemonTypeMsToPokemonType),
       meta: meta as unknown as PaginationMeta,
     };
   }
@@ -71,7 +69,7 @@ export class PokemonService implements OnModuleInit {
     );
 
     return {
-      data: data ? data.map(convertPokemonMsToPokemon) : [],
+      data: data ? data.map(this.pokemonMapper.convertPokemonMsToPokemon) : [],
       meta: meta as unknown as PaginationMeta,
     };
   }
