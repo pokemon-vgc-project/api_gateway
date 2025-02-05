@@ -3,6 +3,7 @@ import { ConfigLoaderAdapter } from './config_loader.interface';
 export enum configLoaderEnum {
   HTTP = 'http',
   POKEDEX_MS = 'pokedexMs',
+  WAILORD_MS = 'wailordMs',
 }
 
 export const getConfig = (): ConfigLoaderAdapter => ({
@@ -16,5 +17,8 @@ export const getConfig = (): ConfigLoaderAdapter => ({
       ? Number(process.env.POKEDEX_MS_PORT)
       : 3000,
     package: process.env.POKEDEX_MS_PACKAGE || 'pokedex',
+  },
+  wailordMs: {
+    host: process.env.WAILORD_MS_HOST || 'http://wailord.vgcproject.test',
   },
 });

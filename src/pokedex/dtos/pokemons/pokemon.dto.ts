@@ -67,6 +67,9 @@ export class PokemonDto {
     nullable: false,
   })
   readonly abilities: PokemonAbilityDto;
+
+  @ApiProperty({ type: String, required: true, nullable: false })
+  readonly imgLink: string;
 }
 
 export class GetPokemonsDto extends PaginationDto {
