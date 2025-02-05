@@ -3,6 +3,7 @@ import { ConfigLoaderAdapter } from './config_loader.interface';
 export enum configLoaderEnum {
   HTTP = 'http',
   POKEDEX_MS = 'pokedexMs',
+  WAILORD_MS = 'wailordMs',
 }
 
 export const getConfig = (): ConfigLoaderAdapter => ({

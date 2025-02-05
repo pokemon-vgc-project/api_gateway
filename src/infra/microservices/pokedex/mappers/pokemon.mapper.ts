@@ -6,7 +6,16 @@ import {
   PokemonType,
 } from '../../../../domain/models/pokedex.model';
 import { pokedex } from '../../../../domain/proto/@pokemon-vgc-project/lib-proto/proto/pokedex';
+import { WailordMs } from 'src/setup/config/config_loader.interface';
+import { configLoaderEnum } from 'src/setup/config/config.loader';
+import { Injectable } from '@nestjs/common';
 
+interface GetPokemonImgLinkOptions {
+  num: number;
+  forme?: string;
+}
+
+@Injectable()
 export class PokemonMapper {
   constructor(private readonly configService: ConfigService) {}
 
@@ -35,6 +44,10 @@ export class PokemonMapper {
       abilities: pokemonMs.abilities.map(
         this.convertPokemonAbilityMsToPokemonAbility,
       ),
+      imgLink: this.getPokemonImgLink({
+        num: pokemonMs.num,
+        forme: pokemonMs.form,
+      }),
     };
   };
 
@@ -62,4 +75,13 @@ export class PokemonMapper {
         abilityMs.type && abilityMs.type.trim().length ? abilityMs.type : null,
     };
   };
+
+  getPokemonImgLink({ num, forme }: GetPokemonImgLinkOptions): string {
+    const host = this.configService.get<WailordMs>(
+      configLoaderEnum.WAILORD_MS,
+    ).host;
+
+    const formeStr = forme && forme.trim() !== '' ? `_${forme}` : '';
+    return `${host}/pokedex/${num}${formeStr}.png`;
+  }
 }

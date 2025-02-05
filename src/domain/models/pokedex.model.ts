@@ -30,4 +30,5 @@ export interface Pokemon {
   types: string[];
   baseStats: PokemonBaseStats;
   abilities: PokemonAbility[];
+  imgLink: string;
 }
