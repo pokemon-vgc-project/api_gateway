@@ -4,22 +4,21 @@ services:
     build:
       context: .
       dockerfile: ./Dockerfile
+      args:
+        - APP_ENV=development
     container_name: api_gateway
+    entrypoint: /app/builds/entrypoints/entrypoint-dev.sh
     environment:
-      - NODE_ENV=development
-      - PORT=3001
-      - POKEDEX_MS_HOST=pokedex_api
+      PORT: 3001
+      POKEDEX_MS_HOST: ${POKEDEX_MS_HOST}
     ports:
       - 3001:3001
       - 9228:9229
     volumes:
-      - "/app/node_modules"
       - "./:/app"
-    command: npm run start:debug
     networks:
       - api-gateway-network
 networks:
   api-gateway-network:
     name: apiGatewayNetwork
     driver: bridge
-  
